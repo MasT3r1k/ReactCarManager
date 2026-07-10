@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Vehicle {
+  id           String   @id @default(cuid())
+  brand        String
+  model        String
+  licensePlate String   @unique
+  year         Int
+  vin          String?
+  mileage      Int      @default(0)
+  status       String   @default("ACTIVE") // ACTIVE, IN_USE, MAINTENANCE, INACTIVE
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  rides        Ride[]
+}
+
+model Driver {
+  id           String   @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String?
+  phone        String?
+  licenseNo    String   @unique
+  status       String   @default("ACTIVE")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  rides        Ride[]
+}
+
+model Ride {
+  id           String   @id @default(cuid())
+  date         DateTime @default(now())
+  purpose      String
+  startKm      Int
+  endKm        Int
+  distance     Int
+  notes        String?
+  vehicleId    String
+  vehicle      Vehicle  @relation(fields: [vehicleId], references: [id])
+  driverId     String
+  driver       Driver   @relation(fields: [driverId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
