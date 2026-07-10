@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { updateVehicleStatus } from "@/app/actions";
+import { updateVehicleStatus } from "@/app/api/vehicle";
 
 export default function StatusSelect({ vehicleId, currentStatus }: { vehicleId: string, currentStatus: string }) {
   const [isPending, startTransition] = useTransition();

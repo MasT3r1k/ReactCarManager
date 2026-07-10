@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { createRide } from "@/app/actions";
+import { createRide } from "@/app/api/ride";
 import type { Vehicle, Driver } from "@/lib/generated/prisma/client";
 
 export default function RideForm({ vehicles, drivers }: { vehicles: Vehicle[], drivers: Driver[] }) {
@@ -10,9 +10,10 @@ export default function RideForm({ vehicles, drivers }: { vehicles: Vehicle[], d
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("")
     const formData = new FormData(e.currentTarget);
     startTransition(async () => {
-      const result = await createRide(null, formData);
+      const result = await createRide(formData);
       if (result?.error) {
         setError(result.error);
       }

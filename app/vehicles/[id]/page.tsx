@@ -1,8 +1,8 @@
 import prisma from "@/lib/prisma";
-import { updateVehicle } from "@/app/actions";
 import Link from "next/link";
-import { ArrowLeft, Car, Map } from "lucide-react";
+import { ArrowLeft, Map } from "lucide-react";
 import { notFound } from "next/navigation";
+import VehicleForm from "./EditVehicle";
 
 export default async function EditVehiclePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -37,50 +37,7 @@ export default async function EditVehiclePage({ params }: { params: Promise<{ id
           <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
             <h2 className="text-lg font-medium text-zinc-900 dark:text-zinc-100">Informace o vozidle</h2>
           </div>
-          <form action={updateVehicle} className="p-6 space-y-4">
-            <input type="hidden" name="id" value={vehicle.id} />
-            
-            <div>
-              <label htmlFor="brand" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Značka</label>
-              <input type="text" name="brand" id="brand" required defaultValue={vehicle.brand} className="mt-1 block w-full rounded-md border dark:bg-zinc-950 dark:text-white border-zinc-300 dark:border-zinc-700 py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" />
-            </div>
-            
-            <div>
-              <label htmlFor="model" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Model</label>
-              <input type="text" name="model" id="model" required defaultValue={vehicle.model} className="mt-1 block w-full rounded-md border dark:bg-zinc-950 dark:text-white border-zinc-300 dark:border-zinc-700 py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" />
-            </div>
-
-            <div>
-              <label htmlFor="licensePlate" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Registrační značka (SPZ)</label>
-              <input type="text" name="licensePlate" id="licensePlate" required defaultValue={vehicle.licensePlate} className="mt-1 block w-full rounded-md border dark:bg-zinc-950 dark:text-white border-zinc-300 dark:border-zinc-700 py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="year" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Rok výroby</label>
-                <input type="number" name="year" id="year" required defaultValue={vehicle.year} min="1900" max={new Date().getFullYear()} className="mt-1 block w-full rounded-md border dark:bg-zinc-950 dark:text-white border-zinc-300 dark:border-zinc-700 py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" />
-              </div>
-              <div>
-                <label htmlFor="status" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Stav</label>
-                <select name="status" id="status" defaultValue={vehicle.status} className="mt-1 block w-full rounded-md border dark:bg-zinc-950 dark:text-white border-zinc-300 dark:border-zinc-700 py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-                  <option value="ACTIVE">Aktivní</option>
-                  <option value="MAINTENANCE">Údržba</option>
-                  <option value="INACTIVE">Neaktivní</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="vin" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">VIN kód</label>
-              <input type="text" name="vin" id="vin" defaultValue={vehicle.vin || ""} className="mt-1 block w-full rounded-md border dark:bg-zinc-950 dark:text-white border-zinc-300 dark:border-zinc-700 py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" />
-            </div>
-
-            <div className="pt-4">
-              <button type="submit" className="w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors">
-                Uložit změny
-              </button>
-            </div>
-          </form>
+          <VehicleForm vehicle={vehicle} />
         </div>
 
         <div className="lg:col-span-2 bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800 overflow-hidden h-fit">

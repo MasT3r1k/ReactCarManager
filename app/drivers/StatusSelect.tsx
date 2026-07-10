@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { updateDriverStatus } from "@/app/actions";
+import { updateDriverStatus } from "@/app/api/driver";
 
 export default function StatusSelect({ driverId, currentStatus }: { driverId: string, currentStatus: string }) {
   const [isPending, startTransition] = useTransition();

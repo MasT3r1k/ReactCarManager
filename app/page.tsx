@@ -3,17 +3,21 @@ import { Car, Users, Map, Activity } from "lucide-react";
 import Link from "next/link";
 
 export default async function DashboardPage() {
-  const [totalVehicles, totalDrivers, totalRides] = await Promise.all([
+  const [totalVehicles, totalDrivers, totalRides, totalDriven, recentRides] = await Promise.all([
     prisma.vehicle.count(),
     prisma.driver.count(),
     prisma.ride.count(),
+    prisma.ride.aggregate({
+      _sum: {
+        distance: true
+      }
+    }),
+    prisma.ride.findMany({
+      take: 5,
+      orderBy: { date: "desc" },
+      include: { vehicle: true, driver: true },
+    })
   ]);
-
-  const recentRides = await prisma.ride.findMany({
-    take: 5,
-    orderBy: { date: "desc" },
-    include: { vehicle: true, driver: true },
-  });
 
   return (
     <div className="space-y-6">
@@ -26,7 +30,7 @@ export default async function DashboardPage() {
         <StatCard title="Vozidla" value={totalVehicles} icon={Car} color="bg-blue-500" href="/vehicles" />
         <StatCard title="Řidiči" value={totalDrivers} icon={Users} color="bg-green-500" href="/drivers" />
         <StatCard title="Jízdy" value={totalRides} icon={Map} color="bg-purple-500" href="/rides" />
-        <StatCard title="Aktivita" value="Přehled" icon={Activity} color="bg-orange-500" />
+        <StatCard title="Celkem ujeto" value={totalDriven._sum.distance + ' km'} icon={Activity} color="bg-orange-500" href="/rides" />
       </div>
 
       <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800 overflow-hidden">

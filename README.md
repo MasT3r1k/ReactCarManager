@@ -15,6 +15,11 @@ DATABASE_URL="file:./dev.db"
 ```
 
 ## Vývojářské spuštění
+- Pro vygenerování prisma schema na clienta, můžete použít následující příkaz
+```bash
+npx prisma generate
+```
+
 - Pro spuštění projektu můžete použít následující příkaz
 
 ```bash
