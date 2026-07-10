@@ -10,7 +10,8 @@ npm install
 - Pro spuštění aplikace potřebujeme vytvořit .env soubor, kde zadáme umístění souboru pro databázi:
 
 ```env
-DATABASE_URL="file:./dev.db" # ./dev.db is created example
+# ./dev.db is created example
+DATABASE_URL="file:./dev.db"
 ```
 
 ## Vývojářské spuštění
