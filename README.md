@@ -21,7 +21,7 @@ DATABASE_URL="file:./dev.db"
 npm run dev
 ```
 
-- A aplikace se spustí na odkazu: (http://localhost:3000)[http://localhost:3000]
+- A aplikace se spustí na odkazu: [http://localhost:3000](http://localhost:3000)
 
 ## Fotky aplikace
 ![Dashboard](./readme/Dashboard.png)
